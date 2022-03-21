@@ -37,31 +37,78 @@ var map = new mapboxgl.Map({
   container: 'map',
   style: 'mapbox://styles/mapbox/streets-v11',
   center: [-71.104081, 42.365554],
-  zoom: 14
+  zoom: 13
 });
 
 var marker = new mapboxgl.Marker()
-    marker.setLngLat([-71.092761, 42.357575])
+    marker.setLngLat([0,0])
     .addTo(map);
+    map.flyTo(marker);
+
+// var marker = new mapboxgl.Marker()
+//     marker.setLngLat([-71.092761, 42.357575])
+//     .addTo(map);
+
+// var marker = new mapboxgl.Marker()
+//     marker.setLngLat([-71.092761, 42.357575])
+//     .addTo(map);
+
+// var marker = new mapboxgl.Marker()
+//     marker.setLngLat([-71.092761, 42.357575])
+//     .addTo(map);
+
+// var marker = new mapboxgl.Marker()
+//     marker.setLngLat([-71.092761, 42.357575])
+//     .addTo(map);
+
+// var marker = new mapboxgl.Marker()
+//     marker.setLngLat([-71.092761, 42.357575])
+//     .addTo(map);
+
+// var marker = new mapboxgl.Marker()
+//     marker.setLngLat([-71.092761, 42.357575])
+//     .addTo(map);
+
+// var marker = new mapboxgl.Marker()
+//     marker.setLngLat([-71.092761, 42.357575])
+//     .addTo(map);
+
+// var marker = new mapboxgl.Marker()
+//     marker.setLngLat([-71.092761, 42.357575])
+//     .addTo(map);
+
+// var marker = new mapboxgl.Marker()
+//     marker.setLngLat([-71.092761, 42.357575])
+//     .addTo(map);
 
 
 
 function getBusStops(){
-   
-    const longitude = locations[0].attributes.longitude;
-    const latitude = locations[0].attributes.latitude;
+  
+   for(var i = 0; i < 10; i++){ 
+    console.log(locations);
+    const longitude = locations[i].attributes.longitude;
+    const latitude = locations[i].attributes.latitude;
     busStops = [longitude, latitude];
-    return busStops;
+    marker.setLngLat({lng: longitude, lat: latitude})
+    .addTo(map);
+   return busStops;
+   }
+   setInterval(getBusStops, 1000)
 }
+
 
 
 
 async function run(){
     // get bus data    
-	locations = await getBusLocations();
+ ;
+	returnedData = await getBusLocations();
 	console.log(new Date());
-	console.log(locations);
-    getBusStops();
+	
+  locations = returnedData
+   getBusStops()
+    setTimeout(run, 15000)
 }
 
 async function getBusLocations(){
@@ -71,16 +118,16 @@ async function getBusLocations(){
 	return json.data;
 }
 
-var counter = 0;
+// var counter = 0;
 
-function move(){
-  setTimeout(() =>{
-    if(busStops !== busStops) return;
-    marker.setLngLat(busStops[0], busStops[1]);
-    counter++;
-    move();
-  }, 1000);
-}
+// function move(){
+//   setTimeout(() =>{
+//     if(counter >= busStops.length) return;
+//     marker.setLngLat(busStops[counter]);
+//     counter++;
+//     move();
+//   }, 1000);
+// }
 
 
 
