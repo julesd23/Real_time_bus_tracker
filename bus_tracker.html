@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<title>Add a default marker</title>
+<meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no" />
+<script src="https://api.mapbox.com/mapbox-gl-js/v1.11.0/mapbox-gl.js"></script>
+<link href="https://api.mapbox.com/mapbox-gl-js/v1.11.0/mapbox-gl.css" rel="stylesheet" />
+<style>
+  body { margin: 0; padding: 0; }
+  #map { position: absolute; top: 0; bottom: 0; width: 100%; }
+.map-overlay {
+  position: absolute;
+  left: 0;
+  padding: 10px;
+}
+</style>
+</head>
+<body>
+
+<div id="map"></div>
+<div class="map-overlay top">
+  <button style="font-size: 2em;" onclick="run()">
+    Show stops between MIT and Harvard
+  </button>
+</div>
+
+
+<script>
+
+mapboxgl.accessToken = 'pk.eyJ1IjoianVsZXNkMjMiLCJhIjoiY2wwdmRkODlxMHd5bTNlbnB4Z3M0Y3d1ciJ9.i-LQP046aVSLEFNkHfEX4g';
+
+var locations = [];
+var busStops = []; 
+
+var map = new mapboxgl.Map({
+  container: 'map',
+  style: 'mapbox://styles/mapbox/streets-v11',
+  center: [-71.104081, 42.365554],
+  zoom: 14
+});
+
+var marker = new mapboxgl.Marker()
+    marker.setLngLat([-71.092761, 42.357575])
+    .addTo(map);
+
+
+
+function getBusStops(){
+   
+    const longitude = locations[0].attributes.longitude;
+    const latitude = locations[0].attributes.latitude;
+    busStops = [longitude, latitude];
+    return busStops;
+}
+
+
+
+async function run(){
+    // get bus data    
+	locations = await getBusLocations();
+	console.log(new Date());
+	console.log(locations);
+    getBusStops();
+}
+
+async function getBusLocations(){
+	const url = 'https://api-v3.mbta.com/vehicles?filter[route]=1&include=trip';
+	const response = await fetch(url);
+	const json     = await response.json();
+	return json.data;
+}
+
+var counter = 0;
+
+function move(){
+  setTimeout(() =>{
+    if(busStops !== busStops) return;
+    marker.setLngLat(busStops[0], busStops[1]);
+    counter++;
+    move();
+  }, 1000);
+}
+
+
+
+</script>
+</body>
+</html>
