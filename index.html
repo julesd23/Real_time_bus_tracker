@@ -6,130 +6,19 @@
 <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no" />
 <script src="https://api.mapbox.com/mapbox-gl-js/v1.11.0/mapbox-gl.js"></script>
 <link href="https://api.mapbox.com/mapbox-gl-js/v1.11.0/mapbox-gl.css" rel="stylesheet" />
+<link rel="stylesheet" href="styles.css">
 <style>
-  body { margin: 0; padding: 0; }
-  #map { position: absolute; top: 0; bottom: 0; width: 100%; }
-.map-overlay {
-  position: absolute;
-  left: 0;
-  padding: 10px;
-}
 </style>
 </head>
 <body>
 
 <div id="map"></div>
 <div class="map-overlay top">
-  <button style="font-size: 2em;" onclick="run()">
-    Show stops between MIT and Harvard
+  <button class="btn-1" style="font-size: 2em; border-radius: 15px; color: #DEFFF2; background-color: #000009;" onclick="run()">
+    Show Active MBTA Bus Locations in Boston
   </button>
 </div>
 
-
-<script>
-
-mapboxgl.accessToken = 'pk.eyJ1IjoianVsZXNkMjMiLCJhIjoiY2wwdmZyNGxrMTZkZTNqcXBiZjRobWpydSJ9.pHtZtE40L-U8YgEeNs4cQA';
-
-var locations = [];
-var busStops = []; 
-
-var map = new mapboxgl.Map({
-  container: 'map',
-  style: 'mapbox://styles/mapbox/streets-v11',
-  center: [-71.104081, 42.365554],
-  zoom: 13
-});
-
-var marker = new mapboxgl.Marker()
-    marker.setLngLat([0,0])
-    .addTo(map);
-
-// var marker = new mapboxgl.Marker()
-//     marker.setLngLat([-71.092761, 42.357575])
-//     .addTo(map);
-
-// var marker = new mapboxgl.Marker()
-//     marker.setLngLat([-71.092761, 42.357575])
-//     .addTo(map);
-
-// var marker = new mapboxgl.Marker()
-//     marker.setLngLat([-71.092761, 42.357575])
-//     .addTo(map);
-
-// var marker = new mapboxgl.Marker()
-//     marker.setLngLat([-71.092761, 42.357575])
-//     .addTo(map);
-
-// var marker = new mapboxgl.Marker()
-//     marker.setLngLat([-71.092761, 42.357575])
-//     .addTo(map);
-
-// var marker = new mapboxgl.Marker()
-//     marker.setLngLat([-71.092761, 42.357575])
-//     .addTo(map);
-
-// var marker = new mapboxgl.Marker()
-//     marker.setLngLat([-71.092761, 42.357575])
-//     .addTo(map);
-
-// var marker = new mapboxgl.Marker()
-//     marker.setLngLat([-71.092761, 42.357575])
-//     .addTo(map);
-
-// var marker = new mapboxgl.Marker()
-//     marker.setLngLat([-71.092761, 42.357575])
-//     .addTo(map);
-
-
-
-function getBusStops(){
-  
-   for(var i = 0; i < 10; i++){ 
-    console.log(locations);
-    const longitude = locations[i].attributes.longitude;
-    const latitude = locations[i].attributes.latitude;
-    busStops = [longitude, latitude];
-    marker.setLngLat({lng: longitude, lat: latitude})
-    .addTo(map);
-   return busStops;
-   }
-   setInterval(getBusStops, 1000)
-}
-
-
-
-
-async function run(){
-    // get bus data    
- ;
-	returnedData = await getBusLocations();
-	console.log(new Date());
-	
-  locations = returnedData
-   getBusStops()
-    setTimeout(run, 15000)
-}
-
-async function getBusLocations(){
-	const url = 'https://api-v3.mbta.com/vehicles?filter[route]=1&include=trip';
-	const response = await fetch(url);
-	const json     = await response.json();
-	return json.data;
-}
-
-// var counter = 0;
-
-// function move(){
-//   setTimeout(() =>{
-//     if(counter >= busStops.length) return;
-//     marker.setLngLat(busStops[counter]);
-//     counter++;
-//     move();
-//   }, 1000);
-// }
-
-
-
-</script>
+<script src="mapanimation.js"></script>
 </body>
 </html>
