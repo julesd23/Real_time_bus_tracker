@@ -1,6 +1,6 @@
 # Real_time_bus_tracker
 
-## description
+## Description
 This is a program that works with two different api's. One to import a map and markers, and the other to import bus data.
 It tracks all of the active mbta busses in boston once the main button is pushed.
 
